@@ -11,6 +11,9 @@ const users = {
   save: "Uložit",
   ban: "Zablokovat",
   unban: "Odblokovat",
+  addUser: "Přidat uživatele",
+  chooseLanguage: "Vyberte jazyk",
+  willBeGenerated: "Bude vygenerováno",
 } as const;
 
 export default users;

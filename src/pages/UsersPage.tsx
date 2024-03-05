@@ -1,6 +1,5 @@
 import { Block, Check, Clear } from "@mui/icons-material";
 import {
-  Autocomplete,
   CircularProgress,
   IconButton,
   TextField,
@@ -16,7 +15,9 @@ import TableRow from "@mui/material/TableRow";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { User, getUsers, updateUser } from "../api";
+import { User, createUser, getUsers, updateUser } from "../api";
+import { GenderEditor } from "../components";
+import AddSaveCancel from "../components/AddSaveCancel";
 import EditSaveCancel from "../components/EditSaveCancel";
 import useSetField from "../hooks/useSetField";
 
@@ -28,15 +29,18 @@ export default function UsersPage() {
     queryFn: getUsers,
   });
 
-  console.log("xxx is loading", isLoading);
-  console.log("xxx is isRefetching", isRefetching);
-
   const queryClient = useQueryClient();
 
   const mutateUser = useMutation({
     mutationFn: updateUser,
     onSuccess: () => {
-      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+    },
+  });
+
+  const addUser = useMutation({
+    mutationFn: createUser,
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["users"] });
     },
   });
@@ -51,6 +55,16 @@ export default function UsersPage() {
     >
   );
 
+  const getNewUser = (): User & { editing: boolean } => ({
+    id: "0",
+    name: "",
+    banned: false,
+    editing: false,
+    gender: "male",
+  });
+
+  const [newUser, setNewUser] = useState(getNewUser);
+
   const setEditingField = useSetField(setEditingState);
 
   const setName = (row: User, name: string) => {
@@ -63,7 +77,7 @@ export default function UsersPage() {
     }));
   };
 
-  const setGender = (row: User, gender: User["gender"]) => {
+  const setGender = (row: User) => (gender: User["gender"]) => {
     setEditingState((prev) => ({
       ...prev,
       [row.id]: {
@@ -88,18 +102,19 @@ export default function UsersPage() {
   const isRowEditing = (user: User) => editingState[user.id]?.editing;
   const isUserBanned = (user: User) => user.banned;
 
+  console.log("xxx newUser.editing", newUser.editing);
+
   return (
     <div>
       <h1>{t("users")}</h1>
-      <Paper>
-        <h2>{t("filterByUsername")}:</h2>
+      <Paper sx={{ p: 2 }}>
         <TextField
           value={filter}
           onChange={(e) => {
             setFilter(e.target.value);
           }}
           component={"span"}
-          title={t("filterByUsername")}
+          label={t("filterByUsername")}
           InputProps={{
             endAdornment: (
               <IconButton onClick={() => setFilter("")}>
@@ -122,6 +137,51 @@ export default function UsersPage() {
               </TableRow>
             </TableHead>
             <TableBody>
+              <TableRow>
+                <TableCell colSpan={newUser.editing ? 1 : 6}>
+                  <AddSaveCancel
+                    isEditing={newUser.editing}
+                    onAdd={() => {
+                      setNewUser((prev) => ({ ...prev, editing: true }));
+                    }}
+                    onSave={() => {
+                      addUser.mutate(newUser);
+                      setNewUser(getNewUser);
+                    }}
+                    onCancel={() => {
+                      setNewUser(getNewUser);
+                    }}
+                  />
+                </TableCell>
+                {newUser.editing ? (
+                  <>
+                    <TableCell>
+                      <TextField
+                        value={newUser.name}
+                        onChange={(e) =>
+                          setNewUser((prev) => ({
+                            ...prev,
+                            name: e.target.value,
+                          }))
+                        }
+                        size="small"
+                        label={t("userName")}
+                      />
+                    </TableCell>
+                    <TableCell>{t("willBeGenerated")}</TableCell>
+                    <TableCell>
+                      <GenderEditor
+                        onChange={(gender) =>
+                          setNewUser((prev) => ({ ...prev, gender: gender }))
+                        }
+                        value={newUser.gender}
+                      />
+                    </TableCell>
+                    <TableCell></TableCell>
+                    <TableCell></TableCell>
+                  </>
+                ) : null}
+              </TableRow>
               {filteredData.length > 0 && !isRefetching ? (
                 filteredData.map((row) => (
                   <TableRow
@@ -149,6 +209,7 @@ export default function UsersPage() {
                           value={editingState[row.id].name}
                           onChange={(e) => setName(row, e.target.value)}
                           size="small"
+                          label={t("userName")}
                         />
                       ) : (
                         row.name
@@ -157,21 +218,9 @@ export default function UsersPage() {
                     <TableCell>{row.id}</TableCell>
                     <TableCell align="right">
                       {isRowEditing(row) ? (
-                        <Autocomplete
-                          options={["male", "female", "other"] as const}
+                        <GenderEditor
+                          onChange={setGender(row)}
                           value={editingState[row.id].gender}
-                          disableClearable
-                          onChange={(_, value) => {
-                            setGender(row, value);
-                          }}
-                          renderInput={(params) => (
-                            <TextField
-                              {...params}
-                              size="small"
-                              title={t("gender")}
-                            />
-                          )}
-                          filterOptions={(x) => x}
                         />
                       ) : (
                         row.gender

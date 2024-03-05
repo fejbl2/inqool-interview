@@ -18,7 +18,6 @@ export type CreateUser = Omit<User, "id">;
 export type UpdateUser = Partial<Omit<User, "id">> & Pick<User, "id">;
 
 export const getUsers = async () => {
-  console.log("xxx getusers callled");
   if (import.meta.env.VITE_USE_MOCK === "true") {
     return new Promise<User[]>((resolve) =>
       setTimeout(() => resolve(usersSchema.parse(mockApi.mockUserData)), 1000)
@@ -29,10 +28,20 @@ export const getUsers = async () => {
   return usersSchema.parse(res.data);
 };
 
-export const createUser = (user: CreateUser) =>
-  axiosInstance
+export const createUser = async (user: CreateUser) => {
+  if (import.meta.env.VITE_USE_MOCK === "true") {
+    const newUser = userSchema.parse({
+      ...user,
+      id: String(mockApi.mockUserData.length + 1),
+    });
+    mockApi.mockUserData.push(newUser);
+    return newUser;
+  }
+
+  return axiosInstance
     .post<User>("/users", user)
-    .then((res) => usersSchema.parse(res.data));
+    .then((res) => userSchema.parse(res.data));
+};
 
 export const updateUser = async (user: UpdateUser) => {
   if (import.meta.env.VITE_USE_MOCK === "true") {
@@ -43,7 +52,7 @@ export const updateUser = async (user: UpdateUser) => {
   }
   return axiosInstance
     .put<User>(`/users/${user.id}`, user)
-    .then((res) => usersSchema.parse(res.data));
+    .then((res) => userSchema.parse(res.data));
 };
 
 export const deleteUser = (id: User["id"]) =>

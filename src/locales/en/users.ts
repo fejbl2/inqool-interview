@@ -11,6 +11,9 @@ const users = {
   save: "Save",
   ban: "Ban",
   unban: "Unban",
+  addUser: "Add user",
+  chooseLanguage: "Choose language",
+  willBeGenerated: "Will be generated",
 } as const;
 
 export default users;
