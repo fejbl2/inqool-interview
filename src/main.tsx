@@ -6,6 +6,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { z } from "zod";
 import { seed } from "./api/common.ts";
+import { initI18N } from "./i18n.ts";
 import { AnimalsPage, ErrorPage, UsersPage } from "./pages";
 
 const envSchema = z.object({
@@ -20,6 +21,8 @@ declare global {
   type Env = typeof env;
   interface ImportMetaEnv extends Env {}
 }
+
+initI18N();
 
 const router = createBrowserRouter([
   {

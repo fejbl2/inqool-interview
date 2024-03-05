@@ -1,31 +1,50 @@
+import { z } from "zod";
 import { axiosInstance } from "./common";
-import { mockUserData } from "./mock";
+import { mockApi } from "./mock";
 
-export type User = {
-  id: string;
-  name: string;
-  gender: "female" | "male" | "other";
-  banned: boolean;
-};
+const userSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  gender: z.enum(["female", "male", "other"]),
+  banned: z.boolean(),
+});
+
+const usersSchema = z.array(userSchema);
+
+export type User = z.infer<typeof userSchema>;
 
 export type CreateUser = Omit<User, "id">;
 
-export type UpdateUser = Partial<Omit<User, "id">>;
+export type UpdateUser = Partial<Omit<User, "id">> & Pick<User, "id">;
 
 export const getUsers = async () => {
+  console.log("xxx getusers callled");
   if (import.meta.env.VITE_USE_MOCK === "true") {
-    return mockUserData;
+    return new Promise<User[]>((resolve) =>
+      setTimeout(() => resolve(usersSchema.parse(mockApi.mockUserData)), 1000)
+    );
   }
 
   const res = await axiosInstance.get<User[]>("/users");
-  return res.data;
+  return usersSchema.parse(res.data);
 };
 
 export const createUser = (user: CreateUser) =>
-  axiosInstance.post<User>("/users", user).then((res) => res.data);
+  axiosInstance
+    .post<User>("/users", user)
+    .then((res) => usersSchema.parse(res.data));
 
-export const updateUser = (id: User["id"], user: UpdateUser) =>
-  axiosInstance.put<User>(`/users/${id}`, user).then((res) => res.data);
+export const updateUser = async (user: UpdateUser) => {
+  if (import.meta.env.VITE_USE_MOCK === "true") {
+    mockApi.mockUserData = mockApi.mockUserData.map((u) =>
+      u.id === user.id ? { ...u, ...user } : u
+    );
+    return userSchema.parse(mockApi.mockUserData.find((u) => u.id === user.id));
+  }
+  return axiosInstance
+    .put<User>(`/users/${user.id}`, user)
+    .then((res) => usersSchema.parse(res.data));
+};
 
 export const deleteUser = (id: User["id"]) =>
   axiosInstance.delete(`/users/${id}`);
