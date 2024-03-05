@@ -1,30 +1,41 @@
-# React + TypeScript + Vite
+# Notes - please read
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+- The implementation took me 3 hours exactly
+- Sadly, I did not have more time to implement remaining features
+- However, the users page is fully working, and the animals page would be a copy
 
-Currently, two official plugins are available:
+Future extensions:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- implementing the /animals page
+- adding a navbar
+- optimistically updating instead of refetching the data after an update
+- more languages & better localization
 
-## Expanding the ESLint configuration
+## Introduction
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+You are given a simple REST API and asked to create a web application. The
+API is a simple REST API with two entities - user and animal. You need to
+create a web application to interact with these entities.
 
-- Configure the top-level `parserOptions` property like this:
+## Task
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Create a web application using React and TypeScript. If you prefer to use
+Next.js, that’s fine too. You must communicate with a REST API to fetch and
+update data. For this application, we prefer client-side fetching over server-side.
+We expect you to use some libraries for forms, fetching data, data validation,
+etc.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Page /users
+
+• Fetch a list of users from the API
+• Display the list of users in a table
+• Add a filter to the table to filter the users by name (in the future, there
+are plans to add more filters)
+• Add a button to clear the filter
+• Add a form to add a new user to the list
+• Add a button to mark a user as banned
+• Add a button to edit a user’s details
+
+### Page /animals
+
+Now do the same for the second entity - animal.
