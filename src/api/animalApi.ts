@@ -7,6 +7,8 @@ export type Animal = {
   age: number;
 };
 
+// TODO: use mocks as well
+
 export type CreateAnimal = Omit<Animal, "id">;
 
 export type UpdateAnimal = Partial<Omit<Animal, "id">>;

@@ -3,6 +3,8 @@
 - The implementation took me 3 hours exactly
 - Sadly, I did not have more time to implement remaining features
 - However, the users page is fully working, and the animals page would be a copy
+- The InQool API does not set appropriate CORS headers, so there is **env variable VITE_USE_MOCK**.
+  - intentionally committed to the repository so that things work out of the box
 
 Future extensions:
 
