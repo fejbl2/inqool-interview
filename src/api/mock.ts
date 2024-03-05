@@ -1,0 +1,148 @@
+import { Animal } from "./animalApi";
+import { User } from "./userApi";
+
+export const mockUserData: Array<User> = [
+  {
+    id: "clteknpfm003ctcjfsxxtco1i",
+    name: "Isaac Davis",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003dtcjfqydjlfx4",
+    name: "Lonnie Hartmann V",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003etcjfv0t0okzc",
+    name: "Nichole Lindgren V",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ftcjfxcv960hx",
+    name: "Leo Prohaska",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003gtcjf302w8lqq",
+    name: "Louise Kunde",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003htcjfcbled8xh",
+    name: "Paulette Koss",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003itcjfgx98t2l6",
+    name: "Lauren Stokes-Wehner",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003jtcjfyinlmo3v",
+    name: "Robert Wiza",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ktcjf9ujlknq3",
+    name: "Phil Stracke",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ltcjftu8ojx1m",
+    name: "Emma DuBuque",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003mtcjfdv7ieqzf",
+    name: "Gwendolyn Windler",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ntcjfqj2bmi58",
+    name: "Mr. Marlon Miller Sr.",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003otcjfd62vyory",
+    name: "Ms. Thelma Schiller",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ptcjfcx9nm88r",
+    name: "Rodolfo Stiedemann",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003qtcjf9p4njci0",
+    name: "Jan Runolfsdottir",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003rtcjfn7ln5tl4",
+    name: "Hugh Spinka",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003stcjffbh1fwnx",
+    name: "Dr. Lyle Murphy",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003ttcjfzxx3cby6",
+    name: "Salvatore Little",
+    gender: "male",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003utcjfixutfmsl",
+    name: "Gilbert Vandervort",
+    gender: "female",
+    banned: false,
+  },
+  {
+    id: "clteknpfm003vtcjfnuiq5v50",
+    name: "Rick Ratke",
+    gender: "female",
+    banned: false,
+  },
+];
+
+export const mockAnimalData: Array<Animal> = [
+  { id: "clteknpsm003wtcjfnsbhsm1w", name: "Meta", type: "other", age: 17 },
+  { id: "clteknpsm003xtcjf4jabw6jj", name: "Maymie", type: "other", age: 18 },
+  { id: "clteknpsm003ytcjfmfa12my6", name: "Raoul", type: "cat", age: 14 },
+  { id: "clteknpsm003ztcjf3uzxnngo", name: "Micah", type: "dog", age: 16 },
+  { id: "clteknpsm0040tcjfdz39r9c3", name: "Santino", type: "cat", age: 16 },
+  { id: "clteknpsm0041tcjftnu1cgn8", name: "Elroy", type: "cat", age: 20 },
+  { id: "clteknpsm0042tcjf7i0byhp0", name: "Kayleigh", type: "cat", age: 15 },
+  { id: "clteknpsm0043tcjfrfv4f1j6", name: "Araceli", type: "dog", age: 11 },
+  { id: "clteknpsm0044tcjfqmzr3kuo", name: "Maynard", type: "dog", age: 6 },
+  { id: "clteknpsm0045tcjfsxtfmblr", name: "Cleve", type: "other", age: 7 },
+  { id: "clteknpsm0046tcjfaowclee0", name: "Lambert", type: "other", age: 17 },
+  { id: "clteknpsm0047tcjfa0qwric6", name: "Woodrow", type: "cat", age: 6 },
+  { id: "clteknpsm0048tcjf4aw2kbyo", name: "Dave", type: "dog", age: 3 },
+  { id: "clteknpsm0049tcjfsrohj85a", name: "Mavis", type: "dog", age: 4 },
+  { id: "clteknpsm004atcjf7gx3hfpn", name: "Berniece", type: "other", age: 3 },
+  { id: "clteknpsm004btcjfz8gh9s1x", name: "Rowena", type: "dog", age: 14 },
+  { id: "clteknpsm004ctcjfp4sez9nu", name: "Gabe", type: "other", age: 5 },
+  { id: "clteknpsm004dtcjfe5kuo3cr", name: "Sarina", type: "dog", age: 18 },
+  { id: "clteknpsm004etcjfcuapzegg", name: "Rebeca", type: "cat", age: 2 },
+  { id: "clteknpsm004ftcjf3uoccj3t", name: "Aglae", type: "cat", age: 20 },
+];
